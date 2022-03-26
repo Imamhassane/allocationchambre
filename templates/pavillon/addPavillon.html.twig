@@ -1,0 +1,53 @@
+{% extends "base.html.twig" %}
+{% block body %}
+<div class="wrapper col-md-7" >
+  <div class="formContent">
+    <h2 class="active mb-4"> Ajouter un pavillon</h2>
+    
+    {{form_start(form)}}
+        <div class="form-group">
+            {{form_row(form.numPavillon,{'attr':{ 'Placeholder': 'Entrer Le nom du pavillon'}} )}}
+        </div>
+        <div class="form-group mt-2">
+            {{form_row(form.nbreEtage,{'attr':{ 'Placeholder': 'Entrer Le nombre d\'étage'}})}}
+        </div>
+        <div class="form-group mt-2">
+            <label>Affecter ou Ajouter des chambres</label>
+            <select class="select mt-2" name="chooseChambre" id="" onchange="yesnoCheck(this);">
+                <option value="select">Choisir...</option>
+                <option value="affect">Affecter des chambre</option>
+                <option value="add">Créer une nouvelle chambre</option>
+            </select>
+        </div>       
+        <div class="hiddenDiv" id="affecter">
+            <span for=""></span>
+            <input type="checkbox" name="chambre[]" value="">
+        </div>
+        <div class="hiddenDiv" id="ajouter">
+            <div class="form-group numChambre">
+                <div><label for="chambre_numChambre">Num chambre</label><input type="number" id="chambre_numChambre" name="numChambre" placeholder="Entrer Le numéro de chambre"></div>
+            </div>
+            <div class="form-group">
+                <div><label for="chambre_numEtage">Num etage</label><input type="number" id="chambre_numEtage" name="numEtage" placeholder="Entrer Le numéro de l'étage"></div>
+            </div>
+            <div class="form-group">
+                <div>
+                    <label for="chambre_typeChambre">Type chambre</label>
+                    <select id="chambre_typeChambre" name="typeChambre">
+                        <option value="">Choisir le type de chambre</option>
+                        {% for item in typeChambre %}
+                            <option value="{{item.id}}">{{item.type}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+      <input type="submit" class="" value="Ajouter le pavillon">
+    {{form_end(form)}}
+  </div>
+</div> 
+{% block footer %}
+    {{parent()}}
+    <script src="js/pavillon.js" ></script>
+{% endblock %}  
+{% endblock %}

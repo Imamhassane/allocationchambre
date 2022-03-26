@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block menu %}{% endblock %}
+
+{% block body %}
+   
+
+    
+    <div class="wrapper col-md-7" >
+        <div class="formContent">
+            <h2 class="active mb-4"> Login Form</h2>
+             {% if error %}
+                <div class="alert alert-danger">Login ou mot de pass incorrect</div>
+            {% endif %}
+            <form method="post">
+            <div class="form-group">
+                    <input type="text" value="{{ last_username }}" name="email" id="inputEmail" class="" autocomplete="email"  autofocus>
+            </div>
+            <div class="form-group mt-2">
+                    <input type="password" name="password" id="inputPassword" class="" autocomplete="current-password" >
+            </div>
+            <input type="submit" class="" value="Se connecter">
+            <input type="hidden" name="_csrf_token"
+                value="{{ csrf_token('authenticate') }}"
+                >
+            </form>
+        </div>
+    </div>   
+{% endblock %}
+

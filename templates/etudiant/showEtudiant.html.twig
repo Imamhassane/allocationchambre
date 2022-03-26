@@ -1,0 +1,91 @@
+{% extends "base.html.twig" %}
+{% block body %}
+    <form method="post" class="ml-md-3 mt-3">
+        <div class="overflow-auto mb-3 mr-md-5">
+            <a name="" id="" class="float-right a-nav mr-3" href="{{path('addetudiant')}}"role="button">ajouter + </a>
+        </div>
+        <div class="myFiltre ml-md-5 ml-sm-4">
+            <label>Bourse</label>
+            <select name="bourse" id="" >
+                <option value="">Choisir...</option>
+            {% for item in bourses %}
+                <option value="{{item.id}}">{{item.type}}</option>
+            {% endfor %}
+            </select>
+            <label>Chambre</label>
+            <select name="chambre" id="" >
+                <option value="">Choisir...</option>
+            {% for item in chambres %}
+                <option value="{{item.id}}">{{item.numChambre}}</option>
+            {% endfor %}
+            </select>
+            <button name="ok" class="ml-md-2">OK</button>
+        </div>  
+    </form>
+    <div class="overflow-auto">
+        <table class="content-table" id="">
+            <thead>
+                <tr>
+                    <th>Prenom</th>
+                    <th>Nom</th>
+                    <th>Matricule</th>
+                    <th>Adresse</th>
+                    <th>Type de bourse</th>
+                    <th>Chambre</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in etudiants %}
+                    
+                    <tr>
+                        <td>{{item.prenom}}</td>
+                        <td>{{item.nom}}</td>
+                        <td>{{item.matricule}}</td>
+                        <td>-</td>
+                        <td>{{item.bourse.type}}</td>
+                        {% if item.chambre != null %}
+                            <td>
+                                {{'chambre ' ~ item.chambre.numChambre}} 
+                            </td>
+                        {% else %}
+                            <td>-</td>
+                        {% endif %}
+
+                        
+                    </tr>
+                {% endfor %}
+
+                {% for item in etudiantNbs %}
+                    
+                    <tr>
+                        <td>{{item.prenom}}</td>
+                        <td>{{item.nom}}</td>
+                        <td>{{item.matricule}}</td>
+                        <td>{{item.adresse}}</td>
+                        <td>-</td>
+                        <td>-</td>
+
+                        
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+     {% if isPaginated  %}
+        <div class="pagination mt-2 mb-5 "> 
+            {% if page != 1 %}
+                <a href="{{path('showetudiant' , {page : page - 1 , nbre : nbre } ) }}"> <span aria-hidden='true'>&laquo;</span></a> 
+            {% endif %}
+
+            {% for i in range (1 , nbPage) %}
+                {% if i != 0 %}
+                    <a href="{{path('showetudiant' , {page : i , nbre : nbre } ) }}">{{i}}</a>    
+                {% endif %}
+            {% endfor %} 
+
+            {% if page != nbPage %}
+                <a href="{{path('showetudiant' , {page : page + 1 , nbre : nbre } ) }}"><span aria-hidden='true'>&raquo;</span></a>
+            {% endif %}
+        </div> 
+    {% endif %}
+{% endblock %}

@@ -3,17 +3,107 @@
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
-        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
-        {% block stylesheets %}
-            {{ encore_entry_link_tags('app') }}
-        {% endblock %}
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link href="/stylesheets/screen.css" rel="stylesheet"/>
+        <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+        {% block stylesheets %}
+        {% endblock %}
+               
+       
         {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
         {% endblock %}
     </head>
     <body>
-        {% block body %}{% endblock %}
+    {% block menu %}
+        <nav>
+            <div class="navbar">
+                <i class='bx bx-menu mt-2'></i>
+                <div class="nav-links">
+                    <ul class="links">
+                        <li><a class="active" href="{{path('showchambre')}}">LISTE DES CHAMBRES</a></li>
+                        <li><a href="{{path('showpavillon')}}">LISTE DES PAVILLONS</a></li>
+                        <li><a class="active" href="{{path('showetudiant')}}">LISTE DES ETUDIANTS</a></li> 
+                    </ul>
+                </div>
+                <div class="search-box mt-2">
+                    <i class='bx-search'> Log out ?<span class="iconify" data-icon="bx:power-off"></span></i>
+                    <div class="input-box">
+                        <a name="" id="" class="a-nav" href="{{path('app_logout')}}" role="button">Deconnexion</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    {% endblock %}
+        {% block body %}
+       
+
+
+            {% block footer %}
+                <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+                <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+            {% endblock %}
+        {% endblock %}
+                <script>
+                    // search-box open close js code
+                    let navbar = document.querySelector(".navbar");
+                    let searchBox = document.querySelector(".search-box .bx-search");
+                    // let searchBoxCancel = document.querySelector(".search-box .bx-x");
+                    searchBox.addEventListener("click", ()=>{
+                    navbar.classList.toggle("showInput");
+                    if(navbar.classList.contains("showInput")){
+                        searchBox.classList.replace("bx-search" ,"bx-x");
+                    }else {
+                        searchBox.classList.replace("bx-x" ,"bx-search");
+                    } 
+                    });
+
+                    // sidebar open close js code
+                    let navLinks = document.querySelector(".nav-links");
+                    let menuOpenBtn = document.querySelector(".navbar .bx-menu");
+                    let menuCloseBtn = document.querySelector(".nav-links .bx-x");
+                    menuOpenBtn.onclick = function() {
+                    navLinks.style.left = "0";
+                    }
+                    menuCloseBtn.onclick = function() {
+                    navLinks.style.left = "-100%";
+                    }
+
+
+                    // sidebar submenu open close js code
+                    let htmlcssArrow = document.querySelector(".htmlcss-arrow");
+                    htmlcssArrow.onclick = function() {
+                    navLinks.classList.toggle("show1");
+                    }
+                    let moreArrow = document.querySelector(".more-arrow");
+                    moreArrow.onclick = function() {
+                    navLinks.classList.toggle("show2");
+                    }
+                    let jsArrow = document.querySelector(".js-arrow");
+                    jsArrow.onclick = function() {
+                    navLinks.classList.toggle("show3");
+                    }
+                </script> 
     </body>
 </html>
+
+{# {% extends "base.html.twig" %}
+{% block menu %}{% endblock %}
+{% block body %}
+<div class="wrapper col-md-7" >
+  <div class="formContent">
+    <h2 class="active mb-4"> Login Form</h2>
+    <form method="post" action="">
+      <div class="form-group">
+            <input type="text" id="" class="" name="login" placeholder="login">
+      </div>
+      <div class="form-group mt-2">
+            <input type="password" id="password"  name="password" placeholder="password">
+      </div>
+      <input type="submit" class="" value="Se connecter">
+    </form>
+  </div>
+</div>   
+{% endblock %} #}

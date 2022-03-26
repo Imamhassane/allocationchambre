@@ -1,0 +1,54 @@
+{% extends "base.html.twig" %}
+{% block body %}
+    <div class="overflow-auto mr-md-4 mr-sm-5">
+        <a name="" id="" class="float-right mr-md-5 mr-2 mt-3 a-nav" href="{{path('addpavillon')}}"role="button">ajouter + </a>
+    </div>
+    <div class="overflow-auto">
+        <table class="content-table " id="">
+            <thead>
+                <tr>
+                    <th>Numéro pavillon</th>
+                    <th>Nombre d'étage</th>
+                    <th>Voir les chambres</th>
+                    <th>Modifier</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for pavillon in pavillons %}
+                <tr>
+                    <td>{{pavillon.numPavillon}}</td>
+                    <td>{{pavillon.nbreEtage}}</td>
+                    <td>
+                        <a href="{{'showChambrePavillon/' ~ pavillon.id }}">
+                            voir <i class="fa fa-list"></i>
+                        </a>
+                    </td>
+                    <td>
+                        <a href="{{'editpavillon/' ~ pavillon.id }}">
+                            modifier <i class="fa fa-edit"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% if isPaginated %}
+        <div class="pagination mt-2 mb-5 "> 
+            {% if page != 1 %}
+                <a href="{{path('showpavillon' , {page : page - 1 , nbre : nbre } ) }}"> <span aria-hidden='true'>&laquo;</span></a> 
+            {% endif %}
+
+            {% for i in range (1 , nbPage) %}
+                {% if i != 0 %}
+                    <a href="{{path('showpavillon' , {page : i , nbre : nbre } ) }}">{{i}}</a>    
+                {% endif %}
+            {% endfor %} 
+
+            {% if page != nbPage %}
+                <a href="{{path('showpavillon' , {page : page + 1 , nbre : nbre } ) }}"><span aria-hidden='true'>&raquo;</span></a>
+            {% endif %}
+        </div> 
+    {% endif %}
+{% endblock %}

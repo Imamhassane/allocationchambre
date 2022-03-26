@@ -1,0 +1,71 @@
+{% extends "base.html.twig" %}
+{% block body %}
+  <div class="wrapper ">
+    <div class="formContent" >
+          <h2>Ajouter un étudiant </h2>
+        {{form_start(form)}}
+            <div class="form-group">
+                <div class="" >
+                    {{form_row(form.prenom ,{'attr':{ 'Placeholder': 'Entrer le prenom'}} )}}
+                </div>
+                <div>
+                    {{form_row(form.nom ,{'attr':{ 'Placeholder': 'Entrer le nom'}} )}}
+                </div>
+            </div>
+            <div class="form-group">
+                <div>
+                    {{form_row(form.login ,{'attr':{ 'Placeholder': 'Entrer le login'}} )}}
+                </div>
+                <div>
+                    {{form_row(form.telephone ,{'attr':{ 'Placeholder': 'Entrer le numéro de téléphone'}} )}}
+                </div>
+            </div>
+            <div class="form-group">
+                <div>
+                    {{form_row(form.dateNaissance)}}
+                </div>
+            </div>
+            <div class="form-group">
+                <div>
+                    <label>Type d'étudiant</label>
+                    <select name="typeEtu" id="" onchange="yesnoCheck(this);">
+                        <option value="select">Sélectionner le type d'étudiant</option>
+                        <option value="nonBoursier">Etudiant non boursier </option>
+                        <option value="boursierNL">Etudiant boursier</option>
+                    </select>
+                </div> 
+                 {% if error is defined %}
+                        <ul><li>{{error}}</li></ul>
+                {% endif %}
+            </div>
+            <div class="form-group" id="Section1" style="display:none">
+                <div>
+                    {{form_row(formNb)}}
+                </div>
+                 {% if erroradresse is defined %}
+                        <ul><li>{{erroradresse}}</li></ul>
+                {% endif %}
+            </div>
+            <div class="form-group"  id="Section2" style="display:none">
+                <div>
+                    {{form_row(form.bourse)}}
+                </div>
+                 {% if errorbourse is defined %}
+                        <ul><li>{{errorbourse}}</li></ul>
+                {% endif %}
+                <div>
+                    {{form_row(form.chambre)}}
+                </div>
+            </div>
+          
+
+          <input type="submit" class="" value="Ajouter l'étudiant">
+        {{form_end(form)}}
+    </div>
+  </div>
+
+{% block footer %}
+    {{parent()}}
+    <script src="js/etudiant.js" ></script>
+{% endblock %}
+{% endblock %}

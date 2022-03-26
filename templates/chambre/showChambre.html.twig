@@ -1,0 +1,94 @@
+{% extends "base.html.twig" %}
+{% block body %}
+
+   {% if requet == "showchambre" %}
+        <form method="post" class="ml-2 mt-3 myFiltre mr-md-4 changeA">
+            <a name="" id="" class="float-right a-nav mr-3 mr-md-5" href="{{path('addchambre')}}"role="button">ajouter + </a>
+            <div class="ml-md-5 filter" >
+                <label>Pavillon</label>
+                <select name="pavillon" id="" >
+                    <option value="">Choisir ...</option>
+                    {% for item in pavillons %}
+                        <option value="{{item.id}}">{{'Pavillon ' ~ item.numPavillon}}</option>
+                    {% endfor %}
+                </select>
+                <button name="ok" class="ml-md-2">OK</button>
+            </div>    
+        </form>
+    {% endif %}
+    <div class="overflow-auto">
+        <table class="content-table " id="">
+            <thead>
+                <tr>
+                    <th>Numéro chabre</th>
+                    <th>Numéro Etage</th>
+                    <th>Type de chambre</th>
+                    {% if requet == "showchambre" %}
+                        <th>Pavillon</th>
+                        <th>Modifier</th>
+                        <th>Archiver</th>
+                    {% endif %}
+                    {% if requet == "showChambrePavillon" %}
+                        <th>Etat</th>
+                    {% endif %}
+                </tr>
+            </thead>
+            <tbody>
+                {% if requet == "showchambre" %}
+                    {% for chambre in chambres %}
+                        <tr>
+                            <td>{{chambre.numChambre}}</td>
+                            <td>{{chambre.numEtage}}</td>
+                            <td>{{chambre.typeChambre.type}}</td>
+                            {% if chambre.pavillon.id is defined %}
+                                <td>{{chambre.pavillon.numPavillon}}</td>
+                            {% else %}
+                                <td>-</td>
+                            {% endif %}
+                            <td>
+                                <a href="{{'editchambre/' ~ chambre.id }}">
+                                    modifier <i class="fa fa-edit"></i>
+                                </a>
+                            </td>
+                            <td>
+                                <a href="{{'archiver/' ~ chambre.id }}">
+                                    archiver <i class="fa fa-archive"></i>
+                                </a>
+                            </td>    
+                        </tr>
+                    {% endfor %}
+                {% endif %}
+
+                  {% if requet == "showChambrePavillon" %}
+                    {% for chambre in chambresPavillon %}
+                        <tr>
+                            <td>{{chambre.numChambre}}</td>
+                            <td>{{chambre.numEtage}}</td>
+                            <td>{{chambre.typeChambre.type}}</td>
+                            <td>{{chambre.etat}}</td>
+                        </tr>
+                    {% endfor %}
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+        {% if requet == "showchambre" %}
+            {% if isPaginated  %}
+                <div class="pagination mt-2 mb-5 "> 
+                    {% if page != 1 %}
+                        <a href="{{path('showchambre' , {page : page - 1 , nbre : nbre } ) }}"> <span aria-hidden='true'>&laquo;</span></a> 
+                    {% endif %}
+
+                    {% for i in range (1 , nbPage) %}
+                        {% if i != 0 %}
+                            <a href="{{path('showchambre' , {page : i , nbre : nbre } ) }}">{{i}}</a>    
+                        {% endif %}
+                    {% endfor %} 
+
+                    {% if page != nbPage %}
+                        <a href="{{path('showchambre' , {page : page + 1 , nbre : nbre } ) }}"><span aria-hidden='true'>&raquo;</span></a>
+                    {% endif %}
+                </div> 
+            {% endif %}
+        {% endif %}
+{% endblock %}
